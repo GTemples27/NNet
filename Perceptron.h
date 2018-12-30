@@ -4,7 +4,7 @@
 // DON'T THINK THIS IS NEEDED?
 
 class Perceptron
-{
+{/*
     public:
         Perceptron();
         virtual ~Perceptron();
@@ -16,7 +16,7 @@ class Perceptron
     private:
         int numInputs;
         pair <float, float> m_inputs[];
-        float m_output;
+        float m_output;*/
 };
 
 #endif // PERCEPTRON_H

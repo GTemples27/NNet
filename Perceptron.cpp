@@ -1,3 +1,4 @@
+/*
 #include "Perceptron.h"
 #include <cstdlib>
 Perceptron::Perceptron()
@@ -43,3 +44,4 @@ float Perceptron::Activate(float sum)
 {
     return sum / (1 + abs(sum));
 }
+*/
