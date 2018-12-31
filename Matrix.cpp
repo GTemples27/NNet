@@ -56,6 +56,7 @@ Matrix::Matrix(const vector< vector<float> >& data)
     m_cols = m_data[0].size();
 }
 
+/*
 Matrix::Matrix(const Matrix& other)
 {
     //copy ctor
@@ -67,6 +68,7 @@ Matrix& Matrix::operator=(const Matrix& rhs)
     //assignment operator
     return *this;
 }
+*/
 
 // accessors
 int Matrix::GetRows() {return m_rows;}
@@ -74,8 +76,13 @@ int Matrix::GetCols() {return m_cols;}
 float Matrix::GetDataAt(int row, int col){return m_data[row][col];}
 void Matrix::SetDataAt(int row, int col, float data){m_data[row][col] = data;}
 
+//Arithmetic
 Matrix Matrix::Add(Matrix& other)
 {
+    // must be equally sized matrices
+    if (this->GetCols() != other.GetCols() || this->GetRows() != other.GetCols())
+        throw;
+
     int rows = this->GetRows();
     int cols = this->GetCols();
 
@@ -93,19 +100,63 @@ Matrix Matrix::Add(Matrix& other)
     return result;
 }
 
-Matrix Matrix::Subtract(const Matrix& other)
+Matrix Matrix::Subtract(Matrix& other)
 {
-
+    Matrix sub;
+    sub = other.Multiply(-1);
+    return this->Add(sub);
 }
 
+//this returns a new matrix, doesn't modify the current one
 Matrix Matrix::Multiply(int scalar)
 {
+    int rows = this->GetRows();
+    int cols = this->GetCols();
 
+    Matrix result(rows, cols);
+    for(unsigned i = 0; i < rows; ++i)
+    {
+        for (unsigned j = 0; j < cols; ++j)
+        {
+            float a = this->GetDataAt(i, j);
+            result.SetDataAt(i, j, a * scalar);
+        }
+    }
+
+    return result;
 }
 
-Matrix Matrix::Dot(const Matrix& other)
+// FIGURE OUT EXIT CONDITIONS
+Matrix Matrix::Dot(Matrix& other)
 {
+    // Must multiply a mxn by a nxp matrix
+    if (this->GetCols() != other.GetRows())
+        return;
 
+    int rows = this->GetRows();
+    int cols = other.GetCols();
+
+    //n will be used to get the cells' values
+    int n = this->GetCols();
+
+    Matrix result(rows, cols);
+
+    for(unsigned i = 0; i < rows; ++i)
+    {
+        for (unsigned j = 0; j < cols; ++j)
+        {
+            float sum = 0;
+            for (unsigned q = 0; q < n; ++q)
+            {
+                float a = this->GetDataAt(i, q);
+                float b = other.GetDataAt(q, j);
+                sum += a * b;
+            }
+            result.SetDataAt(i, j, sum);
+        }
+    }
+
+    return result;
 }
 
 void Matrix::Print()

@@ -1,0 +1,8 @@
+# ignore all giles in bin
+bin/
+
+# same with obj
+obj/
+
+# also these depend things? i guess
+*.depend

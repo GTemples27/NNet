@@ -20,16 +20,16 @@ class Matrix
         //virtual ~Matrix();
 
         //Copy
-        Matrix(const Matrix& other);
+        //Matrix(const Matrix& other);
 
         //Assignment
-        Matrix& operator=(const Matrix& other);
+        //Matrix& operator=(const Matrix& other);
 
         //Arithmetic
         Matrix Add(Matrix& other);
-        Matrix Subtract(const Matrix& other);
+        Matrix Subtract(Matrix& other);
         Matrix Multiply(int);
-        Matrix Dot(const Matrix& other);
+        Matrix Dot(Matrix& other);
 
         // Mutators and Accessors
         int GetRows();
