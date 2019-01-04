@@ -7,12 +7,11 @@ int main()
 
     vector<vector<float> > a{ {1, 2}, {3, 4} };
     Matrix A(a);
-    vector<vector<float> > b{ {5, 6}, {7, 8} };
+    vector<vector<float> > b{ {1, 2}, {3, 4} };
     Matrix B(b);
 
-    A = A.Multiply(2);
-    A = A.Add(B);
+    cout << (A == B) << endl;
 
     Matrix C = A.Dot(B);
-    C.Print();
+    cout << C;
 }

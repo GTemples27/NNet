@@ -71,17 +71,14 @@ Matrix& Matrix::operator=(const Matrix& rhs)
 */
 
 // accessors
-int Matrix::GetRows() {return m_rows;}
-int Matrix::GetCols() {return m_cols;}
-float Matrix::GetDataAt(int row, int col){return m_data[row][col];}
+int Matrix::GetRows() const {return m_rows;}
+int Matrix::GetCols() const {return m_cols;}
+float Matrix::GetDataAt(int row, int col) const {return m_data[row][col];}
 void Matrix::SetDataAt(int row, int col, float data){m_data[row][col] = data;}
 
 //Arithmetic
-Matrix Matrix::Add(Matrix& other)
+Matrix Matrix::Add(const Matrix& other) const
 {
-    // must be equally sized matrices
-    if (this->GetCols() != other.GetCols() || this->GetRows() != other.GetCols())
-        throw;
 
     int rows = this->GetRows();
     int cols = this->GetCols();
@@ -100,7 +97,7 @@ Matrix Matrix::Add(Matrix& other)
     return result;
 }
 
-Matrix Matrix::Subtract(Matrix& other)
+Matrix Matrix::Subtract(const Matrix& other) const
 {
     Matrix sub;
     sub = other.Multiply(-1);
@@ -108,7 +105,7 @@ Matrix Matrix::Subtract(Matrix& other)
 }
 
 //this returns a new matrix, doesn't modify the current one
-Matrix Matrix::Multiply(int scalar)
+Matrix Matrix::Multiply (int scalar) const
 {
     int rows = this->GetRows();
     int cols = this->GetCols();
@@ -127,11 +124,8 @@ Matrix Matrix::Multiply(int scalar)
 }
 
 // FIGURE OUT EXIT CONDITIONS
-Matrix Matrix::Dot(Matrix& other)
+Matrix Matrix::Dot(const Matrix& other) const
 {
-    // Must multiply a mxn by a nxp matrix
-    if (this->GetCols() != other.GetRows())
-        return;
 
     int rows = this->GetRows();
     int cols = other.GetCols();
@@ -159,7 +153,8 @@ Matrix Matrix::Dot(Matrix& other)
     return result;
 }
 
-void Matrix::Print()
+//make this pretty print later
+void Matrix::Print() const
 {
     for (unsigned i = 0; i < m_rows; ++i)
     {
@@ -167,4 +162,34 @@ void Matrix::Print()
             cout << m_data[i][j] << " ";
         cout << "\n";
     }
+}
+
+bool operator==(const Matrix& A, const Matrix& B)
+{
+    if (A.GetCols() != B.GetCols() || A.GetRows() != B.GetRows())
+        return false;
+
+    bool isEqual = true;
+    for (unsigned i = 0; i < A.GetRows(); ++i)
+    {
+        for (unsigned j = 0; j < A.GetCols(); ++j)
+        {
+            if (A.GetDataAt(i, j) != B.GetDataAt(i, j))
+                isEqual = false;
+        }
+    }
+
+    return isEqual;
+}
+
+// DON'T NEED NEWLINE AFTER COUT'ING A MATRIX
+ostream& operator <<(ostream& stream, Matrix& A)
+{
+    for (unsigned i = 0; i < A.GetRows(); ++i)
+        {
+            for (unsigned j = 0; j < A.GetCols(); ++j)
+                stream << A.GetDataAt(i, j) << ' ';
+            stream << "\n";
+        }
+    return stream;
 }

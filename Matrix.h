@@ -26,18 +26,22 @@ class Matrix
         //Matrix& operator=(const Matrix& other);
 
         //Arithmetic
-        Matrix Add(Matrix& other);
-        Matrix Subtract(Matrix& other);
-        Matrix Multiply(int);
-        Matrix Dot(Matrix& other);
+        Matrix Add(const Matrix& other) const;
+        Matrix Subtract(const Matrix& other) const;
+        Matrix Multiply(int) const;
+        Matrix Dot(const Matrix& other) const;
 
         // Mutators and Accessors
-        int GetRows();
-        int GetCols();
-        float GetDataAt(int, int);
+        int GetRows() const;
+        int GetCols() const;
+        float GetDataAt(int, int) const;
         void SetDataAt(int, int, float);
 
-        void Print();
+        void Print() const;
+
+        // overloads
+        friend bool operator==(const Matrix& A, const Matrix& B);
+        friend ostream& operator <<(ostream&, Matrix&);
 
     private:
         int m_rows;
