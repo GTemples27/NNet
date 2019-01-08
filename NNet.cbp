@@ -32,6 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Matrix.cpp" />
+		<Unit filename="Matrix.h" />
+		<Unit filename="NNet.cpp" />
+		<Unit filename="NNet.h" />
+		<Unit filename="Perceptron.cpp" />
+		<Unit filename="Perceptron.h" />
+		<Unit filename="README.txt" />
+		<Unit filename="TODO" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
