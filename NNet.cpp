@@ -23,20 +23,65 @@ NNet::NNet()
 //                     {1, 1, 1},
 //                     {1, 1, 1},
 //                     {1, 1, 1} }
+
+// ADD A BIAS NODE!
 NNet::NNet(vector<int> layers)
 {
+    // Set numOfLayers
     m_numOfLayers = layers.size();
 
+    // Set weight matrices
     // Weights are initially randomized; for testing, they'll all start at 0.5
     vector<float> weightVector;
+    vector< vector<float> > weightMatrixData;
     m_weights.clear();
-    for (unsigned i = 0; i < m_layers; ++i)
+    for (unsigned i = 0; i < m_numOfLayers - 1; ++i)
     {
         weightVector.clear();
+        for (unsigned j = 0; j < layers[i + 1]; ++j)
+        {
+            weightMatrixData.clear();
+            for (unsigned k = 0; k < layers[i]; ++k)
+            {
+                // Change this to random weights later
+                weightVector.push_back(0.5f);
+            }
+            weightMatrixData.push_back(weightVector);
+        }
+        Matrix weightMatrix(weightMatrixData);
+        m_weights.push_back(weightMatrix);
+    }
+
+    // Set layer matrices
+    vector<float> layerVector;
+    // Note: This will always be a nx1 matrix that corresponds to the perceptron data in each layer
+    vector< vector<float> > layerMatrixData;
+    layerMatrixData.clear();
+    for (unsigned i = 0; i < m_numOfLayers; ++i)
+    {
+        layerVector.clear();
         for (unsigned j = 0; j < layers[i]; ++j)
         {
-            weightVector.push_back(0.5f);
+            // Gonna initialize the data all as 1s... I think these should be random later
+            layerVector.push_back(1);
         }
-        m_weights.push_back(weightVector);
+        layerMatrixData.push_back(layerVector);
+        Matrix layerMatrix(layerMatrix);
+        m_layers.push_back(layerMatrix);
     }
+}
+
+// Directly alters the net, doesn't return anything
+void NNet::FeedForward()
+{
+    for(unsigned i = 0; i < m_numOfLayers - 1; ++i)
+    {
+
+    }
+}
+
+// Display the net's data; mainly for testing
+void NNet::Display()
+{
+
 }

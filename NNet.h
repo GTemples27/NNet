@@ -11,11 +11,12 @@ class NNet
     public:
         NNet();
         NNet(vector<int>);
-        FeedForward();
+        void FeedForward();
+        void Display();
     private:
          int m_numOfLayers;
-         Matrix m_weights;
-         Matrix m_layers;
+         vector<Matrix> m_weights;
+         vector<Matrix> m_layers;
 };
 
 #endif // NNET_H
