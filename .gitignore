@@ -6,3 +6,6 @@ obj/
 
 # also these depend things? i guess
 *.depend
+
+# and this layout file thing
+*.layout

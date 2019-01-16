@@ -3,16 +3,19 @@
 
 #include <iostream>
 #include <vector>
+#include "Matrix.h"
+
 using namespace std;
 class NNet
 {
     public:
         NNet();
         NNet(vector<int>);
-        NNet(int[]);
+        FeedForward();
     private:
-         int m_layers;
-         vector< vector<float> > m_weights;
+         int m_numOfLayers;
+         Matrix m_weights;
+         Matrix m_layers;
 };
 
 #endif // NNET_H
