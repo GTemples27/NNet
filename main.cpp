@@ -1,17 +1,14 @@
 #include <iostream>
 #include "Matrix.h"
+#include "NNet.h"
+#include <random>
+#include <ctime>
 using namespace std;
 
 int main()
 {
-
-    vector<vector<float> > a{ {1, 2}, {3, 4} };
-    Matrix A(a);
-    vector<vector<float> > b{ {1, 2}, {3, 4} };
-    Matrix B(b);
-
-    cout << (A == B) << endl;
-
-    Matrix C = A.Dot(B);
-    cout << C;
+    srand(time(NULL));
+    NNet Net({3, 2, 1});
+    Net.FeedForward();
+    Net.Display();
 }

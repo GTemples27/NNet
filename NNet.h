@@ -10,9 +10,10 @@ class NNet
 {
     public:
         NNet();
-        NNet(vector<int>);
+        NNet(const vector<int>&);
         void FeedForward();
         void Display();
+        float Activate(float);
     private:
          int m_numOfLayers;
          vector<Matrix> m_weights;

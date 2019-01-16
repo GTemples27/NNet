@@ -1,5 +1,5 @@
 #include "NNet.h"
-
+#include <cmath>
 NNet::NNet()
 {
     //ctor
@@ -11,8 +11,8 @@ NNet::NNet()
 //
 //    THESE ARE THE PERCEPTRON VALUES, NOT WEIGHTS
 //    NOTE: DOESN'T INCLUDE BIAS NODE, BUT IT SHOULD
-//    m_layers = { {0.5, 0.5, 0.5, 0.0, 0.0},
-//                 {0.5, 0.5, 0.5, 0.5, 0.0},
+//    m_layers = { {0.5, 0.5, 0.5} ,
+//                 {0.5, 0.5, 0.5, 0.5},
 //                 {0.5, 0.5, 0.5, 0.5, 0.5} }
 //
 //    THESE ARE THE WEIGHTS
@@ -25,7 +25,7 @@ NNet::NNet()
 //                     {1, 1, 1} }
 
 // ADD A BIAS NODE!
-NNet::NNet(vector<int> layers)
+NNet::NNet(const vector<int>& layers)
 {
     // Set numOfLayers
     m_numOfLayers = layers.size();
@@ -37,21 +37,21 @@ NNet::NNet(vector<int> layers)
     m_weights.clear();
     for (unsigned i = 0; i < m_numOfLayers - 1; ++i)
     {
-        weightVector.clear();
+        weightMatrixData.clear();
         for (unsigned j = 0; j < layers[i + 1]; ++j)
         {
-            weightMatrixData.clear();
+            weightVector.clear();
             for (unsigned k = 0; k < layers[i]; ++k)
             {
-                // Change this to random weights later
-                weightVector.push_back(0.5f);
+                // rand from -1 to 1 with step 0.1
+                float init = ((float)(rand() % 21) - 10) / 10;
+                weightVector.push_back(init);
             }
             weightMatrixData.push_back(weightVector);
         }
         Matrix weightMatrix(weightMatrixData);
         m_weights.push_back(weightMatrix);
     }
-
     // Set layer matrices
     vector<float> layerVector;
     // Note: This will always be a nx1 matrix that corresponds to the perceptron data in each layer
@@ -59,29 +59,56 @@ NNet::NNet(vector<int> layers)
     layerMatrixData.clear();
     for (unsigned i = 0; i < m_numOfLayers; ++i)
     {
-        layerVector.clear();
         for (unsigned j = 0; j < layers[i]; ++j)
         {
-            // Gonna initialize the data all as 1s... I think these should be random later
+            // These are initialized as 1s, but feed forward will override them with proper values
+            layerVector.clear();
             layerVector.push_back(1);
+            layerMatrixData.push_back(layerVector);
         }
-        layerMatrixData.push_back(layerVector);
-        Matrix layerMatrix(layerMatrix);
+        Matrix layerMatrix(layerMatrixData);
+        layerMatrixData.clear();
         m_layers.push_back(layerMatrix);
     }
+
+    cout << "weights\n--------------------------\n";
+    for (unsigned i = 0; i < m_weights.size(); ++i)
+        cout << m_weights[i] << "--------------------\n";
+    cout << "layers\n--------------------------\n";
+    for (unsigned i = 0; i < m_layers.size(); ++i)
+        cout << m_layers[i] << "--------------------\n";
 }
 
 // Directly alters the net, doesn't return anything
 void NNet::FeedForward()
 {
+    Matrix outputMatrix;
     for(unsigned i = 0; i < m_numOfLayers - 1; ++i)
     {
-
+        outputMatrix = m_weights[i].Dot(m_layers[i]);
+        for (unsigned j = 0; j < outputMatrix.GetRows(); ++j)
+        {
+            m_layers[i + 1].SetDataAt(j, 0, Activate(outputMatrix.GetDataAt(j, 0)));
+        }
     }
 }
 
 // Display the net's data; mainly for testing
 void NNet::Display()
 {
+    cout << "LAYERS:\n";
+    for (unsigned i = 0; i < m_layers.size(); ++i)
+        cout << "Layer " << i << "\n" << m_layers[i];
 
+    cout << "\n\nWEIGHTS:\n";
+    for (unsigned i = 0; i < m_weights.size(); ++i)
+        cout << "Weight Matrix " << i << "\n" << m_weights[i];
+}
+
+
+// Returns the value of an activation function
+float NNet::Activate(float x)
+{
+   float output = x / (1 + abs(x));
+   return output;
 }

@@ -1,4 +1,5 @@
-> Implement pretty print in Matrix::Print
-> Make NeuralNet class
-> Find Calculus/Math libraries for gradients?
-> Finish everything
+>Constructor 🗸
+>Feed Forward 🗸
+>Cost
+>Back propagation
+>Training

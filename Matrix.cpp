@@ -41,6 +41,7 @@ Matrix::Matrix(const vector< vector<float> >& data)
     if (data.size() == 0)
         return;
 
+    m_data.clear();
     //if the array is jagged, iterate through and get the max column size
     //...not sure if this is needed, but might as well implement it
     int maxCols = 0;
