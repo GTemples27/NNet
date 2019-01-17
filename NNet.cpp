@@ -112,3 +112,8 @@ float NNet::Activate(float x)
    float output = x / (1 + abs(x));
    return output;
 }
+
+float NNet::CalculateCost(float guess, float desired)
+{
+    return (guess - desired);
+}

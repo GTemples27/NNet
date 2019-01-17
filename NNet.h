@@ -14,6 +14,7 @@ class NNet
         void FeedForward();
         void Display();
         float Activate(float);
+        float CalculateCost(float, float);
     private:
          int m_numOfLayers;
          vector<Matrix> m_weights;

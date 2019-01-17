@@ -7,8 +7,9 @@ using namespace std;
 
 int main()
 {
-    srand(time(NULL));
-    NNet Net({3, 2, 1});
-    Net.FeedForward();
-    Net.Display();
+    cout << pow(3, 2);
+//    srand(time(NULL));
+//    NNet Net({3, 2, 1});
+//    Net.FeedForward();
+//    Net.Display();
 }
